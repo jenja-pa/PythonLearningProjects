@@ -125,3 +125,7 @@ for quote in response.css("div.quote"):
 {'text': '“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”', 'author': 'Albert Einstein', 'tags': ['change', 'deep-thoughts', 'thinking', 'world']}
 {'text': '“It is our choices, Harry, that show what we truly are, far more than our abilities.”', 'author': 'J.K. Rowling', 'tags': ['abilities', 'choices']}
 ```
+
+### 7 Організуємо добування даних за допомогою паука
+Паук зазвичай створює багато словників, що містять дані добуті із сторінки. Організуємо видачу даних за допомогою генератора
+[quotes_scrapy.py](https://github.com/jenja-pa/PythonLearningProjects/blob/65ba26e04ec9e0bbec20dcaa81e9b28d4671a738/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
