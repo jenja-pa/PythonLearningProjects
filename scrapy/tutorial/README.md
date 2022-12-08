@@ -73,7 +73,7 @@ response.css('title::text').re(r'(\w+) to (\w+)')
 ```
 
 #### 5.2 XPath запити
-Scrapy так5ож підтримує XPath виразу, приклад запиту:
+Scrapy також підтримує XPath вирази, приклад запиту:
 ```python
 response.xpath('//title')
 [<Selector xpath='//title' data='<title>Quotes to Scrape</title>'>]
@@ -82,4 +82,36 @@ response.xpath('//title/text()').get()
 ```
 > XPath вирази це основа scrapy і навіть CSS селектори конвертуються в XPath.
 
+### 6 XPath запити
+Добуваємо quotes та authors
 
+Отже оскільки ми знаємо як вибирати дані добудемо на сторінці цитату та автора.
+
+Розглянемо як виглядає сторінка та будуємо запити із консолі запитів
+```python
+response.css("div.quote")
+[<Selector xpath="descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]" data='<div class="quote" itemscope itemtype...'>,
+ <Selector xpath="descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]" data='<div class="quote" itemscope itemtype...'>,
+ ...]
+ ```
+ 
+ ```python
+ response.css("div.quote")
+[<Selector xpath="descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]" data='<div class="quote" itemscope itemtype...'>,
+ <Selector xpath="descendant-or-self::div[@class and contains(concat(' ', normalize-space(@class), ' '), ' quote ')]" data='<div class="quote" itemscope itemtype...'>,
+ ...]
+```
+Кожен селектор повертає всю інформацію про цитату і пізніше ми зможеио добути із неї потрібну інформацію, для цього назначимо результат у змінну і робитимемо запити із неї:
+```python
+quote = response.css("div.quote")[0]
+
+text = quote.css("span.text::text").get()
+text -> '“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”'
+author = quote.css("small.author::text").get()
+author -> 'Albert Einstein'
+```
+теги ми отримаємо як список рядків за допомогою .getall():
+```python
+tags = quote.css("div.tags a.tag::text").getall()
+tags -> ['change', 'deep-thoughts', 'thinking', 'world']
+```
