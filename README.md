@@ -13,4 +13,4 @@
 - Проект 1 - [Гайд Widgets](https://textual.textualize.io/guide/widgets/) - hello-widget  - *буде доповнено*
 
 ## Вивчення фреймворка - scrapy
- - Базовий [туторіал](https://docs.scrapy.org/en/latest/intro/tutorial.html) - __в процесі виконання__
+ - Базовий [туторіал](https://docs.scrapy.org/en/latest/intro/tutorial.html) - [Матеріали](scrapy/tutorial) __в процесі виконання__
