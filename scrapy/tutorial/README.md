@@ -2,21 +2,21 @@
 
 В цьому керівництві ми ознайомимось із базовими знаннями про **scrappy**
 
-1. Створення початкового шаблона застосунка
+### 1. Створення початкового шаблона застосунка
 ```Bathfile
 scrapt startproject tutorial
 ```
-2. Написання першого [паука](https://github.com/jenja-pa/PythonLearningProjects/blob/9803ca349c9c20e9642c5d5f9c184f3adee90046/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
+### 2. Написання першого [паука](https://github.com/jenja-pa/PythonLearningProjects/blob/9803ca349c9c20e9642c5d5f9c184f3adee90046/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
 
-3. Запуск проекта, із папки проекта виконати команду:
+### 3. Запуск проекта, із папки проекта виконати команду:
 ```Bathfile
 scrapy crawl quotes
 ```
 в папці проекта з'являться 2 html файла
 
-4. Якщо початкові файли мають наперед задані лінки можна обійтися без функції start_requests(), а замість неї використати атрибут start_urls де списком указати перелік лінків [паук](https://github.com/jenja-pa/PythonLearningProjects/blob/fe61127e2a8599107a52a788dd109907edd953db/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
+### 4. Якщо початкові файли мають наперед задані лінки можна обійтися без функції start_requests(), а замість неї використати атрибут start_urls де списком указати перелік лінків [паук](https://github.com/jenja-pa/PythonLearningProjects/blob/fe61127e2a8599107a52a788dd109907edd953db/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
 
-5. Отримання даних із HTML
+### 5. Отримання даних із HTML
 Кращий шлях познайомитись із витягненням даних це попробувати використати селектори за допомогою інструмента Scrapy shell. Виконайте:
 
 *linux*:
@@ -29,6 +29,7 @@ scrapy shell "https://quotes.toscrape.com/page/1/"
 ```
 > не забувайте брати адресу в лапки '..'(linux), або у подвійні лапки ".."(windows), бо інакше запит може не працювати.
 
+#### 5.1 CSS запити
 Результати виконання різних типів запитів із даної консолі:
 ```python
 response.css('title')
@@ -71,5 +72,14 @@ response.css('title::text').re(r'(\w+) to (\w+)')
 ['Quotes', 'Scrape']
 ```
 
+#### 5.2 XPath запити
+Scrapy так5ож підтримує XPath виразу, приклад запиту:
+```python
+response.xpath('//title')
+[<Selector xpath='//title' data='<title>Quotes to Scrape</title>'>]
+response.xpath('//title/text()').get()
+'Quotes to Scrape'
+```
+> XPath вирази це основа scrapy і навіть CSS селектори конвертуються в XPath.
 
 
