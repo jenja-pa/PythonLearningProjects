@@ -82,8 +82,7 @@ response.xpath('//title/text()').get()
 ```
 > XPath вирази це основа scrapy і навіть CSS селектори конвертуються в XPath.
 
-### 6 XPath запити
-Добуваємо quotes та authors
+### 6 Добуваємо quotes та authors
 
 Отже оскільки ми знаємо як вибирати дані добудемо на сторінці цитату та автора.
 
@@ -114,4 +113,15 @@ author -> 'Albert Einstein'
 ```python
 tags = quote.css("div.tags a.tag::text").getall()
 tags -> ['change', 'deep-thoughts', 'thinking', 'world']
+```
+Знаючи як добувати дані із окремої цитати, організуємо прохід по всім цитатам на сторінці:
+```python
+for quote in response.css("div.quote"):
+    text = quote.css("span.text::text").get()
+    author = quote.css("small.author::text").get()
+    tags = quote.css("div.tags a.tag::text").getall()
+    print(dict(text=text, author=author, tags=tags))
+
+{'text': '“The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.”', 'author': 'Albert Einstein', 'tags': ['change', 'deep-thoughts', 'thinking', 'world']}
+{'text': '“It is our choices, Harry, that show what we truly are, far more than our abilities.”', 'author': 'J.K. Rowling', 'tags': ['abilities', 'choices']}
 ```
