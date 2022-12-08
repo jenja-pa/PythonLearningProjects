@@ -16,3 +16,60 @@ scrapy crawl quotes
 
 4. Якщо початкові файли мають наперед задані лінки можна обійтися без функції start_requests(), а замість неї використати атрибут start_urls де списком указати перелік лінків [паук](https://github.com/jenja-pa/PythonLearningProjects/blob/fe61127e2a8599107a52a788dd109907edd953db/scrapy/tutorial/tutorial/spiders/quotes_scrapy.py)
 
+5. Отримання даних із HTML
+Кращий шлях познайомитись із витягненням даних це попробувати використати селектори за допомогою інструмента Scrapy shell. Виконайте:
+
+*linux*:
+```Bathfile
+scrapy shell 'https://quotes.toscrape.com/page/1/'
+```
+*windows*:
+```Bathfile
+scrapy shell "https://quotes.toscrape.com/page/1/"
+```
+> не забувайте брати адресу в лапки '..'(linux), або у подвійні лапки ".."(windows), бо інакше запит може не працювати.
+
+Результати виконання різних типів запитів із даної консолі:
+```python
+response.css('title')
+[<Selector xpath='descendant-or-self::title' data='<title>Quotes to Scrape</title>'>]
+
+response.css('title::text').getall()
+['Quotes to Scrape']
+
+response.css('title').getall()
+['<title>Quotes to Scrape</title>']
+
+response.css('title::text').get()
+'Quotes to Scrape'
+
+response.css('title::text')[0].get()
+'Quotes to Scrape'
+
+response.css('noelement')[0].get()
+Traceback (most recent call last):
+...
+IndexError: list index out of range
+...
+'''
+
+response.css("noelement").get()
+```
+> .getall() - повертає список знайдених елементів
+
+> .get() - повертає перший знайдений елемент
+
+також можна застосувати регулярні вирази для отримання даних:
+```python
+response.css('title::text').re(r'Quotes.*')
+['Quotes to Scrape']
+
+response.css('title::text').re(r'Q\w+')
+['Quotes']
+
+response.css('title::text').re(r'(\w+) to (\w+)')
+['Quotes', 'Scrape']
+```
+
+
+
